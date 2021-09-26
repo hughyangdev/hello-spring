@@ -27,6 +27,9 @@ public class MemberService {
      * 회원 가입
      */
     public Long join(Member member) {
+
+//        long start = System.currentTimeMillis();  // 시간측정(공통사항) 관련
+
         // 같은 이름이 있는 중복 회원 허용 안함
         // null 가능성이 있으면 Optional로 감싸서 반환해주며 이로 인해 ifPresent 사용 가능
         // Optional로 감싸지 않으면 null 체크하여야 함
@@ -37,10 +40,17 @@ public class MemberService {
         // Optional<Member> 반환을 result로 받지 않고 바로 메서드 실행으로 코드 정리
         // 메서드로 별도 분리 refatoring 진행
         //  -> 영역 선택 후 ctrl+alt+shift+T 에서 extract method OR ctrl+alt+m 으로 메서드 분리 생성
-        validateDuplicateMember(member);    // 중복 회원 검증
+//        try {     // 시간측정(공통사항) 관련
+            validateDuplicateMember(member);    // 중복 회원 검증
 
-        memberRepository.save(member);
-        return member.getId();
+            memberRepository.save(member);
+            return member.getId();
+//        } finally {   // 시간측정(공통사항) 관련
+//            long finish = System.currentTimeMillis();
+//            long timeMs = finish - start;
+//            System.out.println("join = " + timeMs + "ms");
+//        }
+
     }
 
     private void validateDuplicateMember(Member member) {
@@ -54,7 +64,15 @@ public class MemberService {
      * 전체 회원 조회
      */
     public List<Member> findMembers() {
-        return memberRepository.findAll();
+//        long start = System.currentTimeMillis();  // 시간측정(공통사항) 관련
+//        try {
+            return memberRepository.findAll();
+//        } finally {   // 시간측정(공통사항) 관련
+//            long finish = System.currentTimeMillis();
+//            long timeMs = finish - start;
+//            System.out.println("findMembers = " + timeMs + "ms");
+//        }
+
     }
 
     public Optional<Member> findOne(Long memberId) {
